@@ -204,7 +204,7 @@ class CSRankings {
 	    // We've finished loading; remove the overlay.
 	    document!.getElementById("overlay-loading")!.style.display = "none";
 	    // Randomly display a survey.
-	    const surveyFrequency = 10; // One out of this many users gets the survey (on average).
+	    const surveyFrequency = 1000000; // One out of this many users gets the survey (on average).
 	    // Check to see if survey has already been displayed.
 	    let displaySurvey = false;
 	    // Keep the cookie for backwards compatibility (for now).
@@ -224,7 +224,7 @@ class CSRankings {
             }
 	    // Randomly display a sponsorship request.
 	    // In the future, tie to amount of use of the site, a la Wikipedia.
-	    const sponsorshipFrequency = 20; // One out of this many users gets the sponsor page (on average).
+	    const sponsorshipFrequency = 5; // One out of this many users gets the sponsor page (on average).
 	    // Check to see if the sponsorship page has already been displayed.
             if (!localStorage.getItem('sponsorshipDisplayed')) {
 		// Not shown yet.
@@ -1274,13 +1274,14 @@ class CSRankings {
             let keys = Object.keys(fc);
             keys.sort((a: string, b: string) => {
                 if (fc[b] === fc[a]) {
-                    return this.compareNames(a, b);
-                    /*		    let fb = Math.round(10.0 * facultyAdjustedCount[b]) / 10.0;
-                            const fa = Math.round(10.0 * facultyAdjustedCount[a]) / 10.0;
-                            if (fb === fa) {
-                            return this.compareNames(a, b);
-                            }
-                            return fb - fa; */
+                    // return this.compareNames(a, b);
+		    const fb = Math.round(10.0 * facultyAdjustedCount[b]) / 10.0;
+                    const fa = Math.round(10.0 * facultyAdjustedCount[a]) / 10.0;
+                    if (fb === fa) {
+                       return this.compareNames(a, b);
+                    } else {
+                       return fb - fa;
+		    }
                 } else {
                     return fc[b] - fc[a];
                 }
